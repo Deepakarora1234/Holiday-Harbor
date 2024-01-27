@@ -28,7 +28,7 @@ router.post("/login",[
         {
           return res.status(400).json({message : "Invalid credentials"})
         }
-        const token  = jwt.sign({userId : user.id}, process.env.JWT_SECRET_KEY, {
+        const token  = jwt.sign({userId : user.id},"GXoIQwI81xDQSoYonjGHBXeBjcmK1pZo", {
           expiresIn : "1d"
         })
         res.cookie("auth_token", token , {
@@ -44,6 +44,7 @@ router.post("/login",[
     }
     catch (error){
       console.log(error);
+      
       res.status(500).json({message : "Something went wrong"});
     }
 

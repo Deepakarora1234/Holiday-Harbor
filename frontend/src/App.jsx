@@ -2,7 +2,7 @@ import React from 'react'
 import Layout from "./Layouts/Layout"
 import Register from "./pages/register.jsx"
 import {BrowserRouter as Router, Route, Routes, Navigate} from "react-router-dom"
-import SignIn from './pages/Signin.jsx'
+import SignIn from './pages/SignIn.jsx'
 function App() {
   return (
     <Router>

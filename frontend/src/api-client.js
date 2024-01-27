@@ -3,7 +3,7 @@ const  API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "";
 console.log( API_BASE_URL)
 
 export const register = async (formData)=>{
-    const response  = await fetch('/api/users/register',{
+    const response  = await fetch('http://localhost:7000/api/users/register',{
         method:'POST',
         credentials: "include",
         headers:{
@@ -19,7 +19,7 @@ export const register = async (formData)=>{
     }
 }
 export const signIn =async (formData)=>{
-    const response  = await fetch('/api/auth/login',{
+    const response  = await fetch('http://localhost:7000/api/auth/login',{
         method : "POST",
         credentials:"include",
         headers:{
@@ -37,7 +37,7 @@ export const signIn =async (formData)=>{
 
 }
 export const validateToken = async ()=>{
-    const response = await fetch('/api/auth/validate-token', {
+    const response = await fetch('http://localhost:7000/api/auth/validate-token', {
         method:"GET",
         credentials:"include",
 
@@ -48,7 +48,7 @@ export const validateToken = async ()=>{
     return response.json()
 }
 export const signOut = async ()=>{
-    const response = await fetch ('/api/auth/logout', {
+    const response = await fetch ('http://localhost:7000/api/auth/logout', {
         credentials:"include", 
         method: "POST",
     })

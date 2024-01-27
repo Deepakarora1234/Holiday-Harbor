@@ -22,7 +22,7 @@ app.use(cookieParser())
 app.use(express.json());
 app.use(express.urlencoded({extended : true}));
 app.use(cors({
-    // origin:"https://holiday-harbor.onrender.com",
+    origin:process.env.FRONTEND-URL,
     credentials : true,
 }));
 

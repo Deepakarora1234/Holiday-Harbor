@@ -1,13 +1,17 @@
+// import dotenv from 'dotenv';
+// dotenv.config();
 
-const  API_BASE_URL = import.meta.env.VITE_API_BASE_URL || '';
-console.log( API_BASE_URL)
+// const  API_BASE_URL = process.env.VITE_API_BASE_URL;
+// const API_BASE_URL1 = ''
+// console.log( API_BASE_URL)
 
 export const register = async (formData)=>{
-    const response  = await fetch(`${API_BASE_URL}/api/users/register`,{
+    const response  = await fetch(`/api/users/register`,{
         method:'POST',
         credentials: "include",
         headers:{
-            "Content-Type":"application/json"
+            "Content-Type":"application/json",
+            
         },
         body : JSON.stringify(formData),
 
@@ -19,11 +23,12 @@ export const register = async (formData)=>{
     }
 }
 export const signIn =async (formData)=>{
-    const response  = await fetch(`${API_BASE_URL}/api/auth/login`,{
+    const response  = await fetch(`/api/auth/login`,{
         method : "POST",
         credentials:"include",
         headers:{
-            "Content-Type" : "application/json"
+            "Content-Type" : "application/json",
+            
         },
         body : JSON.stringify(formData),
     })
@@ -37,9 +42,10 @@ export const signIn =async (formData)=>{
 
 }
 export const validateToken = async ()=>{
-    const response = await fetch(`${API_BASE_URL}/api/auth/validate-token`, {
+    const response = await fetch(`/api/auth/validate-token`, {
         method:"GET",
         credentials:"include",
+       
 
     })
     if(!response.ok){
@@ -48,7 +54,7 @@ export const validateToken = async ()=>{
     return response.json()
 }
 export const signOut = async ()=>{
-    const response = await fetch (`${API_BASE_URL}/api/auth/logout`, {
+    const response = await fetch (`/api/auth/logout`, {
         credentials:"include", 
         method: "POST",
     })
@@ -56,4 +62,22 @@ export const signOut = async ()=>{
         throw new Error("Error during sign out")
     }
     // return response.json()
+}
+export const addMyHotel = async (hotelFormData)=>{
+    const response  =await fetch(`/api/my-hotels`, {
+        method :"POST", 
+        credentials :"include",
+        body:hotelFormData,
+        
+    })
+    
+    if(!response.ok)
+    {
+        throw new Error("Failed to add hotel")
+
+    }
+   
+    return response.json();
+
+
 }

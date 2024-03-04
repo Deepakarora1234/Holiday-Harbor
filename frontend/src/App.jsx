@@ -5,6 +5,7 @@ import {BrowserRouter as Router, Route, Routes, Navigate} from "react-router-dom
 import SignIn from './pages/SignIn.jsx'
 import { useAppContext } from './contexts/AppContext.jsx'
 import AddHotel from './pages/AddHotel.jsx'
+import MyHotels from './pages/MyHotels.jsx'
 function App() {
   const {isLoggedIn} = useAppContext();
   return (
@@ -29,6 +30,11 @@ function App() {
             <Route path='/add-hotel' element = {
               <Layout>
                 <AddHotel />
+              </Layout>
+            }/>
+             <Route path='/my-hotels' element = {
+              <Layout>
+                <MyHotels />
               </Layout>
             }/>
           </>

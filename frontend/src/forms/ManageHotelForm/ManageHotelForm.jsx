@@ -4,14 +4,26 @@ import TypeSection from "./TypeSection";
 import FacilitiesSection from "./FacilitiesSection";
 import GuestsSection from "./GuestsSection";
 import ImagesSection from "./ImagesSection";
+import { useEffect } from "react";
 
 const ManageHotelForm = (props) =>{
+    const hotel = props.hotel
+    // console.log(hotel)
     const formMethods = useForm();
-    const {handleSubmit} = formMethods;
+    const {handleSubmit, reset} = formMethods;
+    useEffect(()=>{
+        
+        reset(hotel)
+    },[props.hotel, reset])
     const onSubmit = handleSubmit((formDataJson)=>{
 
         // console.log(formData)
         const formData = new FormData()
+
+        if(props.hotel){
+            formData.append("hotelId",props.hotel._id)
+        }
+
         formData.append("name", formDataJson.name)
         formData.append("city", formDataJson.city)
         formData.append("country", formDataJson.country)
@@ -26,6 +38,11 @@ const ManageHotelForm = (props) =>{
 
         })
 
+        if(formDataJson.imageUrls){
+            formDataJson.imageUrls.forEach((url, index)=>{
+                formData.append(`imageUrls[${index}]`, url)
+            })
+        }
 
         Array.from(formDataJson.imageFiles).forEach((imageFile=>{
             formData.append(`imageFiles`, imageFile)

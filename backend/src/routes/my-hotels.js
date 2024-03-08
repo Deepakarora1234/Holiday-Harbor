@@ -38,12 +38,12 @@ router.post("/", verifyToken, [
         });
 
         await Promise.all(uploadPromises);
-        newHotel.lastUpdated = new Date();
-        newHotel.userId = req.userId;
-
         newHotel.imageUrls = imagePublicIds.map(publicId => {
             return cloudinary.v2.url(publicId);
         });
+
+        newHotel.lastUpdated = new Date();
+        newHotel.userId = req.userId;
 
         const hotel = new Hotel(newHotel);
         await hotel.save();
@@ -64,6 +64,86 @@ router.get("/", verifyToken, async(req,res)=>{
     }
     
 })
+
+router.get("/:id", verifyToken, async(req, res)=>{
+    const id = req.params.id.toString();
+    try
+    {
+        const hotel = await Hotel.findOne({
+            _id : id, 
+            userId : req.userId
+        })
+
+        res.json(hotel)
+    }
+    catch(error)
+    {
+        res.status(500).json({message : "Error fetching hotels"})
+    }
+})
+
+router.put("/:hotelId", verifyToken, upload.array("imageFiles"), async(req,res)=>{
+    try{
+       
+        const updatedHotel = req.body
+        
+        updatedHotel.lastUpdated  = new Date()
+        const hotel = await Hotel.findOne({ _id: req.params.hotelId, userId: req.userId });
+        
+    
+
+       if(!hotel)
+       {
+        res.status(404).json({message : "Hotel not found"})
+
+       }
+       hotel.name = updatedHotel.name
+       hotel.city = updatedHotel.city
+       hotel.country = updatedHotel.country
+       hotel.description = updatedHotel.description
+       hotel.type = updatedHotel.type
+       hotel.adultCount = updatedHotel.adultCount
+       hotel.childCount = updatedHotel.childCount
+       hotel.facilities = updatedHotel.facilities
+       hotel.starRating = updatedHotel.starRating
+       hotel.lastUpdated = updatedHotel.lastUpdated
+       
+    
+
+       
+       const files = req.files
+
+       const imagePublicIds = [];
+
+       const uploadPromises = files.map(async (image) => {
+           const b64 = Buffer.from(image.buffer).toString("base64");
+           let dataURI = "data:" + image.mimetype + ";base64," + b64;
+           const uploadResult = await cloudinary.v2.uploader.upload(dataURI);
+           imagePublicIds.push(uploadResult.public_id);
+       });
+
+     
+
+       await Promise.all(uploadPromises);
+       
+       const array =  imagePublicIds.map(publicId => {
+           return cloudinary.v2.url(publicId);
+       });
+    //    updatedHotel.imageUrls = [...updatedHotel.imageUrls || [], array]
+       hotel.imageUrls = [...array, ...(updatedHotel.imageUrls || [])]
+
+       await hotel.save()
+
+       res.status(201).json(hotel)
+
+
+    }
+    catch(error){
+        res.status(500).json({message : "Something went wrong"})
+    }
+} )
+
+
 
 
 

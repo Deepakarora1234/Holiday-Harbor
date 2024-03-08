@@ -18,7 +18,7 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
 const source = process.env.MONGODB_CONNECTION_STRING;
 // console.log(source)
-console.log(process.env.CLOUDINARY_CLOUD_NAME)
+// console.log(process.env.CLOUDINARY_CLOUD_NAME)
 
 cloudinary.config({
     cloud_name:"dm3jnihfu",
@@ -26,7 +26,7 @@ cloudinary.config({
     api_secret:"WxdHbltJE_GdIRPo-Xfqx29YdUo",
 })
 
-mongoose.connect("mongodb+srv://aroradeepak0817:X8IZo7d74QzYrhbk@mer-booking-app-db.kfqgdyn.mongodb.net/"); 
+await mongoose.connect("mongodb+srv://aroradeepak0817:X8IZo7d74QzYrhbk@mer-booking-app-db.kfqgdyn.mongodb.net/"); 
 const app = express();
 app.use(cookieParser())
 app.use(express.json());

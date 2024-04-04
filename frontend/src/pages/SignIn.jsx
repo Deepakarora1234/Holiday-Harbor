@@ -3,12 +3,14 @@ import { useForm } from "react-hook-form"
 import { useMutation, useQueryClient} from "react-query"
 import * as apiClient from "../api-client.js"
 import { useAppContext } from '../contexts/AppContext'
-import { useNavigate, Link } from "react-router-dom"
+import { useNavigate, Link, useLocation } from "react-router-dom"
 
 const SignIn = ()=>{
     const navigate  = useNavigate();
     const {showToast} = useAppContext()
     const queryClient =useQueryClient();
+
+    const location = useLocation()
 
     const {register, formState:{errors}, handleSubmit} = useForm();
     const mutation = useMutation(apiClient.signIn,{
@@ -16,7 +18,7 @@ const SignIn = ()=>{
             console.log("success")
            showToast({message:"Sign In successfull",type:"SUCCESS" })
            await queryClient.invalidateQueries("validateToken")
-           navigate("/");
+           navigate(location.state?.from?.pathname || "/");
         },
         onError:(error)=>{
             console.log(error);

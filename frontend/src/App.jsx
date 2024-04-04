@@ -7,6 +7,7 @@ import { useAppContext } from './contexts/AppContext.jsx'
 import AddHotel from './pages/AddHotel.jsx'
 import MyHotels from './pages/MyHotels.jsx'
 import EditHotel from './pages/EditHotel.jsx'
+import Search from './pages/Search.jsx'
 function App() {
   const {isLoggedIn} = useAppContext();
   return (
@@ -18,7 +19,7 @@ function App() {
         </Layout>
         }></Route>
         <Route path = "/search" element = {<Layout>
-          <p>Search Page</p>
+          <Search />
         </Layout>}></Route>
         <Route path = "/register" element={<Layout>
           <Register />
@@ -26,6 +27,10 @@ function App() {
         <Route path = "/sign-in" element={<Layout>
           <SignIn />
         </Layout>} />
+        <Route path = "/search" element={<Layout>
+          <Search/>
+        </Layout>} />
+
         {isLoggedIn && (
           <>
             <Route path='/add-hotel' element = {

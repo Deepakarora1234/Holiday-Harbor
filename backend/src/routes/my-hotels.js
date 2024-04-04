@@ -86,6 +86,7 @@ router.put("/:hotelId", verifyToken, upload.array("imageFiles"), async(req,res)=
     try{
        
         const updatedHotel = req.body
+
         
         updatedHotel.lastUpdated  = new Date()
         const hotel = await Hotel.findOne({ _id: req.params.hotelId, userId: req.userId });

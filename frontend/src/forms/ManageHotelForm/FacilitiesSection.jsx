@@ -4,7 +4,7 @@ const FacilitiesSection =()=>{
     const {register, formState : {errors}} = useFormContext();
     return (
         <div>
-            <h2 className="text-2xl font-bold mb-3">Facilities</h2>
+            <h2 className="max-[450px]:ml-2 text-2xl font-bold mb-3">Facilities</h2>
             <div className="grid grid-cols-5 gap-3">
                 {
                     hotelFacilities.map((facility, index)=>(

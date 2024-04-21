@@ -6,7 +6,7 @@ const TypeSection = () =>{
     const typeWatch = watch("type")
     return (
         <div className = "">
-        <h2 className="text-2xl font-bold mb-3">Type</h2>
+        <h2 className="max-[450px]:ml-2 text-2xl font-bold mb-3">Type</h2>
         <div className="grid grid-cols-5 gap-2">
             {hotelTypes.map((type, index)=>(
                 <label key ={index} className = {

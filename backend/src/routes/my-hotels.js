@@ -46,6 +46,8 @@ router.post("/", verifyToken, [
         newHotel.userId = req.userId;
 
         const hotel = new Hotel(newHotel);
+        const emptyBookingArray = [];
+        hotel.bookings = emptyBookingArray
         await hotel.save();
         res.status(201).send(hotel);
     } catch (e) {

@@ -5,6 +5,17 @@
 // const API_BASE_URL1 = ''
 // console.log( API_BASE_URL)
 
+
+export const fetchCurrentUser = async () => {
+    const response = await fetch(`/api/users/me`, {
+      credentials: "include",
+    });
+    if (!response.ok) {
+      throw new Error("Error fetching user");
+    }
+    return response.json();
+  };
+
 export const register = async (formData)=>{
     const response  = await fetch(`/api/users/register`,{
         method:'POST',
@@ -149,6 +160,14 @@ export const searchHotels = async (searchParams) =>{
     return response.json()
 }
 
+export const fetchHotels = async () => {
+  const response = await fetch(`/api/hotels`);
+  if (!response.ok) {
+    throw new Error("Error fetching hotels");
+  }
+  return response.json();
+};
+
 export const fetchHotelById = async (hotelId) => {
     const response = await fetch(`/api/hotels/${hotelId}`);
     if (!response.ok) {
@@ -157,3 +176,63 @@ export const fetchHotelById = async (hotelId) => {
   
     return response.json();
   };
+
+
+  export const createPaymentIntent = async (
+    hotelId,
+    numberOfNights
+  ) => {
+    const response = await fetch(
+      `/api/hotels/${hotelId}/bookings/payment-intent`,
+      {
+        credentials: "include",
+        method: "POST",
+        body: JSON.stringify({ numberOfNights }),
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+  
+    if (!response.ok) {
+      throw new Error("Error fetching payment intent");
+    }
+
+    console.log(response)
+  
+    return response.json();
+  };
+
+  export const createRoomBooking = async (formData) => {
+    const response = await fetch(
+      `/api/hotels/${formData.hotelId}/bookings`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+        body: JSON.stringify(formData),
+      }
+    );
+  
+    if (!response.ok) {
+      throw new Error("Error booking room");
+    }
+  };
+
+
+  export const fetchMyBookings = async () => {
+    const response = await fetch(`/api/my-bookings`, {
+      credentials: "include",
+    });
+  
+    if (!response.ok) {
+      throw new Error("Unable to fetch bookings");
+    }
+  
+    return response.json();
+  };
+  
+
+

@@ -12,7 +12,7 @@ const Layout = (Props)=> {
     <div className='container mx-auto'>
         <SearchBar />
     </div>
-    <div className = "container mx-auto py-10 flex-1">
+    <div className = "p-4 container mx-auto py-10 flex-1">
         {Props.children}
     </div>
     <Footer />
